@@ -13,6 +13,13 @@ const DisplayAll = (props) => {
     })
     .catch(err => console.log(`something went wrong ${err}` ))
 },[])
+const deleteHandler = (idFromBelow)=>{
+axios.patch(`http://localhost:8000/api/products/${idFromBelow}}`)
+    .then((res)=>{console.log(res.data);
+      setAlLProductsList(allProductsList.filter((product, index)=>product._id !== idFromBelow))})
+      .catch((err)=> console.log(err))
+
+}
 
   return (
     <div className='text-center'>
@@ -21,9 +28,13 @@ const DisplayAll = (props) => {
           allProductsList.map((product, index) =>
           <div key= {index}>
             {/*        <Link to = {'/products/:id'}> */}
-            <Link to = {`/products/${product._id}`}>
-             {product.title}
-            </Link>
+            <Link to = {`/products/${product._id}`}> 
+            <p>{product.title}</p>
+            view</Link>|
+            <Link to={`/products/update/${product._id}`}>Update</Link>|
+            <button onClick={()=> deleteHandler(product._id)} class="btn btn-primary" type="submit">Delete</button>
+
+
             {/* <p>
               Price : {product.price}
             </p>
